@@ -32,5 +32,26 @@
   *	along with PDXChambers Event Page. If not, see https://www.gnu.org/licenses/gpl-3.0.html.
  */
 include_once 'admin/settings.php';
+include_once 'interface/page-ui.php';
+
+/*Hooks and Functions Required by WordPress*/
+register_activation_hook(__FILE__, 'pdxc_activate_event_page');
+register_deactivation_hook(__FILE__, 'pdxc_deactivate_event_page');
+register_uninstall_hook(__FILE__, 'pdxc_uninstall_event_page');
+
+function pdxc_activate_event_page(){
+    add_shortcode(
+        "pdxchambers-event-page",
+        'pdxc_display_ui'
+    );
+}
+function pdxc_deactivate_event_page(){}
+function pdxc_uninstall_event_page(){}
+
+/*
+    Enqueue scripts and styles
+    Must properly add scripts and styles to prevent overriding existing ones.
+*/
+
 
  ?>
