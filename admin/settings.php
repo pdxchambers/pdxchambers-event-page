@@ -35,9 +35,7 @@ function pdxc_init_admin_content(){
         'pdxc_init_detail_settings',
         'pdxchambers-event-page'
     );
-}
 
-function pdxc_init_settings_fields(){
     add_settings_field(
         /*Uploader for background image.*/
         'pdxc-background-settings',
@@ -191,7 +189,7 @@ function pdxc_init_settings_fields(){
 
 add_action('admin_menu', 'pdxc_init_admin');
 add_action('admin_init', 'pdxc_init_admin_content');
-add_action('admin_init', 'pdxc_init_settings_fields');
+// add_action('admin_init', 'pdxc_init_settings_fields');
 
 function pdxc_admin_content(){
 ?>
@@ -219,117 +217,103 @@ function pdxc_init_detail_settings(){
 }
 
 function pdxc_fileupload_markup(){
+    pdxc_handle_file_upload();
     ?>
     <input type="file" id="imgBackground" name="background_image" multiple="false">
     <input type="hidden" id="post_id" name="post_id" value="0">
     <?php
-    wp_nonce_field('background_image', 'background_image_nonce');
-    if(
-        isset( $_POST['background_image_nonce'], $_POST['post_id'])
-        && wp_verify_nonce($_POST['background_image_nonce'], 'background_image' )
-        && current_user_can('edit_post', $_POST['post_id'])
-    ) {
-        require_once( ABSPATH . 'wp-admin/includes/image.php');
-        require_once( ABSPATH . 'wp-admin/includes/file.php');
-        require_once( ABSPATH . 'wp-admin/includes/media.php');
-        $attachment_id = media_handle_upload( 'background_image', $_POST['post_id']);
+}
 
-        if ( is_wp_error( $attachment_id ) ) {
-            echo 'There was an error uploading the image.';
-        } else {
-            echo 'Success!';
-        }
-    } else {
-        echo 'Security check failed, verify you have permission to edit this page and try again.';
-    }
+function pdxc_handle_file_upload(){
+    echo get_option('pdxc-background-settings');
 }
 
 function pdxc_event_title_markup(){
     ?>
-        <input type="text" id="eventTitle" name="event_title" value="<?php echo get_option( '' ); ?>">
+        <input type="text" id="eventTitle" name="event_title" value="<?php echo get_option( 'pdxc-event-title-settings' ); ?>">
     <?php
 }
 
 function pdxc_title_subtext1_markup(){
     ?>
-        <input type="text" id="eventSubtext1" name="event_subtext1" value="<?php echo get_option( '' ); ?>">
+        <input type="text" id="eventSubtext1" name="event_subtext1" value="<?php echo get_option( 'pdxc-title-subtext1-settings' ); ?>">
     <?php
 }
 
 function pdxc_title_subtext2_markup(){
     ?>
-        <input type="text" id="eventSubtext2" name="event_subtext2" value="<?php echo get_option( '' ); ?>">
+        <input type="text" id="eventSubtext2" name="event_subtext2" value="<?php echo get_option( 'pdxc-title-subtext2-settings' ); ?>">
     <?php
 }
 
 function pdxc_title_subtext3_markup(){
     ?>
-        <input type="text" id="eventSubtext3" name="event_subtext3" value="<?php echo get_option( '' ); ?>">
+        <input type="text" id="eventSubtext3" name="event_subtext3" value="<?php echo get_option( 'pdxc-title-subtext3-settings' ); ?>">
     <?php
 }
 
 function pdxc_title_subtext4_markup(){
     ?>
-        <input type="text" id="eventSubtext4" name="event_subtext4" value="<?php echo get_option( '' ); ?>">
+        <input type="text" id="eventSubtext4" name="event_subtext4" value="<?php echo get_option( 'pdxc-title-subtext4-settings' ); ?>">
     <?php
 }
 function pdxc_detail_title1_markup(){
     ?>
-        <input type="text" id="detail-title1" name="detail_title1" value="<?php echo get_option( '' ); ?>">
+        <input type="text" id="detail-title1" name="detail_title1" value="<?php echo get_option( 'pdxc-detail-title1-settings' ); ?>">
     <?php
     }
 
 function pdxc_detail_content1_markup(){
 ?>
-    <textarea id="detail1" name="detail1" rows="4" cols = "25"><?php echo get_option( '' ); ?></textarea>
+    <textarea id="detail1" name="detail1" rows="4" cols = "25"><?php echo get_option( 'pdxc-detail-content1-settings' ); ?></textarea>
 <?php
 }
 
 function pdxc_detail_title2_markup(){
     ?>
-        <input type="text" id="detail-title2" name="detail_title2" value="<?php echo get_option( '' ); ?>">
+        <input type="text" id="detail-title2" name="detail_title2" value="<?php echo get_option( 'pdxc-detail-title2-settings' ); ?>">
     <?php
     }
 
 function pdxc_detail_content2_markup(){
 ?>
-    <textarea id="detail2" name="detail2" rows="4" cols = "25"><?php echo get_option( '' ); ?></textarea>
+    <textarea id="detail2" name="detail2" rows="4" cols = "25"><?php echo get_option( 'pdxc-detail-content2-settings' ); ?></textarea>
 <?php
 }
 
 function pdxc_detail_title3_markup(){
     ?>
-        <input type="text" id="detail-title3" name="detail_title3" value="<?php echo get_option( '' ); ?>">
+        <input type="text" id="detail-title3" name="detail_title3" value="<?php echo get_option( 'pdxc-detail-title3-settings' ); ?>">
     <?php
     }
 
 function pdxc_detail_content3_markup(){
 ?>
-    <textarea id="detail3" name="detail3" rows="4" cols = "25"><?php echo get_option( '' ); ?></textarea>
+    <textarea id="detail3" name="detail3" rows="4" cols = "25"><?php echo get_option( 'pdxc-detail-content3-settings' ); ?></textarea>
 <?php
 }
 
 function pdxc_detail_title4_markup(){
     ?>
-        <input type="text" id="detail-title4" name="detail_title4" value="<?php echo get_option( '' ); ?>">
+        <input type="text" id="detail-title4" name="detail_title4" value="<?php echo get_option( 'pdxc-detail-title4-settings' ); ?>">
     <?php
     }
 
 function pdxc_detail_content4_markup(){
 ?>
-    <textarea id="detail4" name="detail4" rows="4" cols = "25"><?php echo get_option( '' ); ?></textarea>
+    <textarea id="detail4" name="detail4" rows="4" cols = "25"><?php echo get_option( 'pdxc-detail-content4-settings' ); ?></textarea>
 <?php
 }
 
 function pdxc_detail_title5_markup(){
     ?>
-        <input type="text" id="detail-title5" name="detail_title5" value="<?php echo get_option( '' ); ?>">
+        <input type="text" id="detail-title5" name="detail_title5" value="<?php echo get_option( 'pdxc-detail-title5-settings' ); ?>">
     <?php
     }
 
 function pdxc_detail_content5_markup(){
 ?>
-    <textarea id="detail5" name="detail5" rows="4" cols = "25"><?php echo get_option( '' ); ?></textarea>
+    <textarea id="detail5" name="detail5" rows="4" cols = "25"><?php echo get_option( 'pdxc-detail-content5-settings' ); ?></textarea>
 <?php
 }
 ?>
